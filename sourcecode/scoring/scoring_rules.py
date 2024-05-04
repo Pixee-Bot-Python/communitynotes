@@ -9,6 +9,7 @@ from .explanation_tags import top_tags
 
 import numpy as np
 import pandas as pd
+import math
 
 
 RuleAndVersion = namedtuple("RuleAndVersion", ["ruleName", "ruleVersion", "lockingEnabled"])
@@ -502,9 +503,9 @@ class ApplyGroupModelResult(ScoringRule):
         # to the ordering when selecting columns from noteStats below.
         if idx is None:
           return False
-        elif row[idx] == 1.0:
+        elif math.isclose(row[idx], 1.0, rel_tol=1e-09, abs_tol=0.0):
           return True
-        elif row[idx] == 0.0:
+        elif math.isclose(row[idx], 0.0, rel_tol=1e-09, abs_tol=0.0):
           return False
         else:
           assert False, f"unexpected value: {row[idx]}"
